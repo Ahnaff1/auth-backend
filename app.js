@@ -36,20 +36,20 @@ app.get("/", (request, response, next) => {
 });
 
 // register endpoint
-app.post("/register", (request, response) => {
+app.post("/signup", (request, response) => {
   // hash the password
   bcrypt
     .hash(request.body.password, 10)
     .then((hashedPassword) => {
       // create a new user instance and collect the data
       const user = new User({
+        name:request.body.name,
         email: request.body.email,
         password: hashedPassword,
       });
 
       // save the new user
-      user
-        .save()
+      user.save()
         // return success if the new user is added to the database successfully
         .then((result) => {
           response.status(201).send({
@@ -128,16 +128,6 @@ app.post("/login", (request, response) => {
         e,
       });
     });
-});
-
-// free endpoint
-app.get("/free-endpoint", (request, response) => {
-  response.json({ message: "You are free to access me anytime" });
-});
-
-// authentication endpoint
-app.get("/auth-endpoint", auth, (request, response) => {
-  response.send({ message: "You are authorized to access me" });
 });
 
 module.exports = app;

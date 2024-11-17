@@ -2,6 +2,14 @@ const mongoose = require("mongoose");
 
 // user schema
 const UserSchema = new mongoose.Schema({
+  
+  // name field
+  name: {
+    type: String,
+    required: [true, "Please provide your name!"], // making name required
+    trim: true,  // optional, trims any extra whitespace
+  },
+
   // email field
   email: {
     type: String,
